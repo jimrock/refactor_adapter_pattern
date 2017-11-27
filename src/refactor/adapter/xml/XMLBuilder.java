@@ -4,8 +4,8 @@ import java.util.Stack;
 
 public class XMLBuilder extends AbstractBuilder {
 	private TagNode root;
-	private TagNode parent;
-	private TagNode current;
+	private Node parent;
+	private Node current;
 
 	public XMLBuilder(String rootName) {
 		init(rootName);
@@ -19,7 +19,7 @@ public class XMLBuilder extends AbstractBuilder {
 		if (atRootNode)
 			throw new RuntimeException(CANNOT_ADD_ABOVE_ROOT);
 		history.pop();
-		current = (TagNode) history.peek();
+		current = (Node) history.peek();
 		addBelow(uncle);
 	}
 
@@ -32,7 +32,7 @@ public class XMLBuilder extends AbstractBuilder {
 			throw new RuntimeException(CANNOT_ADD_ABOVE_ROOT);
 		history.pop();
 		history.pop();
-		current = (TagNode) history.peek();
+		current = (Node) history.peek();
 		addBelow(uncle);
 	}
 
@@ -41,7 +41,7 @@ public class XMLBuilder extends AbstractBuilder {
 	}
 
 	public void addBelow(String child) {
-		TagNode childNode = new TagNode(child);
+		Node childNode = new TagNode(child);
 		current.add(childNode);
 		parent = current;
 		current = childNode;
@@ -51,7 +51,7 @@ public class XMLBuilder extends AbstractBuilder {
 	public void addBeside(String sibling) {
 		if (current == root)
 			throw new RuntimeException(CANNOT_ADD_BESIDE_ROOT);
-		TagNode siblingNode = new TagNode(sibling);
+		Node siblingNode = new TagNode(sibling);
 		parent.add(siblingNode);
 		current = siblingNode;
 		history.pop();

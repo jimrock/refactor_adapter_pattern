@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class TagNode {
+public class TagNode implements Node {
 	private String name = "";
 	private StringBuffer attributes;
 	private List children;
@@ -15,10 +15,12 @@ public class TagNode {
 		attributes = new StringBuffer("");
 	}
 
-	public void add(TagNode childNode) {
+	@Override
+	public void add(Node childNode) {
 		children().add(childNode);
 	}
 
+	@Override
 	public void addAttribute(String attribute, String value) {
 		attributes.append(" ");
 		attributes.append(attribute);
@@ -27,6 +29,7 @@ public class TagNode {
 		attributes.append("'");
 	}
 
+	@Override
 	public void addValue(String value) {
 		this.value = value;
 	}
