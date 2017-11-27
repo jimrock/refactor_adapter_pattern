@@ -50,4 +50,14 @@ public abstract class AbstractBuilder implements OutputBuilder {
         current = childNode;
         history.push(current);
     }
+
+    protected void addBeside(Node siblingNode) {
+        if (current == root) {
+            throw new RuntimeException(CANNOT_ADD_BESIDE_ROOT);
+        }
+        parent.add(siblingNode);
+        current = siblingNode;
+        history.pop();
+        history.push(current);
+    }
 }

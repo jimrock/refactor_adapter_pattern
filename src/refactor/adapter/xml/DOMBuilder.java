@@ -21,16 +21,10 @@ public class DOMBuilder extends AbstractBuilder {
 	}
 
     public void addBeside(String sibling) {
-		if (current == root)
-			throw new RuntimeException(CANNOT_ADD_BESIDE_ROOT);
-		Node siblingNode = new ElementAdapter(doc.createElement(sibling),doc);
-		parent.add(siblingNode);
-		current = siblingNode;
-		history.pop();
-		history.push(current);
+        addBeside(new ElementAdapter(doc.createElement(sibling),doc));
 	}
 
-	public Document getDocument() {
+    public Document getDocument() {
 		return doc;
 	}
 

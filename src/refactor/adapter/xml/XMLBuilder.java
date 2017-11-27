@@ -13,13 +13,7 @@ public class XMLBuilder extends AbstractBuilder {
 	}
 
 	public void addBeside(String sibling) {
-		if (current == root)
-			throw new RuntimeException(CANNOT_ADD_BESIDE_ROOT);
-		Node siblingNode = new TagNode(sibling);
-		parent.add(siblingNode);
-		current = siblingNode;
-		history.pop();
-		history.push(current);
+		addBeside(new TagNode(sibling));
 	}
 
 	protected void init(String rootName) {
