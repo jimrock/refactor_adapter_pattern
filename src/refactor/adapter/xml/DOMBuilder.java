@@ -16,36 +16,6 @@ public class DOMBuilder extends AbstractBuilder {
 		init(rootName);
 	}
 
-	public void addAbove(String uncle) {
-		if (current == root)
-			throw new RuntimeException(CANNOT_ADD_ABOVE_ROOT);
-		history.pop();
-		boolean atRootNode = (history.size() == 1);
-		if (atRootNode)
-			throw new RuntimeException(CANNOT_ADD_ABOVE_ROOT);
-		history.pop();
-		current = (Node) history.peek();
-		addBelow(uncle);
-	}
-
-	public void addGrandfather(String grandfather) {
-		if (current == root)
-			throw new RuntimeException(CANNOT_ADD_ABOVE_ROOT);
-		history.pop();
-		boolean atRootNode = (history.size() == 1);
-		if (atRootNode)
-			throw new RuntimeException(CANNOT_ADD_ABOVE_ROOT);
-		history.pop();
-		history.pop();
-		current = (Node) history.peek();
-		addBelow(grandfather);
-	}
-
-	public void addAttribute(String name, String value) {
-	    current.addAttribute(name, value);
-
-	}
-
 	public void addBelow(String child) {
 		Node childNode = new ElementAdapter(doc.createElement(child),doc);
 		current.add(childNode);
@@ -62,10 +32,6 @@ public class DOMBuilder extends AbstractBuilder {
 		current = siblingNode;
 		history.pop();
 		history.push(current);
-	}
-
-	public void addValue(String value) {
-	    current.addValue(value);
 	}
 
 	public Document getDocument() {

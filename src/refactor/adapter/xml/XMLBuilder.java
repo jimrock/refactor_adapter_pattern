@@ -8,35 +8,6 @@ public class XMLBuilder extends AbstractBuilder {
 		init(rootName);
 	}
 
-	public void addAbove(String uncle) {
-		if (current == root)
-			throw new RuntimeException(CANNOT_ADD_ABOVE_ROOT);
-		history.pop();
-		boolean atRootNode = (history.size() == 1);
-		if (atRootNode)
-			throw new RuntimeException(CANNOT_ADD_ABOVE_ROOT);
-		history.pop();
-		current = (Node) history.peek();
-		addBelow(uncle);
-	}
-
-	public void addGrandfather(String uncle) {
-		if (current == root)
-			throw new RuntimeException(CANNOT_ADD_ABOVE_ROOT);
-		history.pop();
-		boolean atRootNode = (history.size() == 1);
-		if (atRootNode)
-			throw new RuntimeException(CANNOT_ADD_ABOVE_ROOT);
-		history.pop();
-		history.pop();
-		current = (Node) history.peek();
-		addBelow(uncle);
-	}
-
-	public void addAttribute(String name, String value) {
-		current.addAttribute(name, value);
-	}
-
 	public void addBelow(String child) {
 		Node childNode = new TagNode(child);
 		current.add(childNode);
@@ -53,10 +24,6 @@ public class XMLBuilder extends AbstractBuilder {
 		current = siblingNode;
 		history.pop();
 		history.push(current);
-	}
-
-	public void addValue(String value) {
-		current.addValue(value);
 	}
 
 	protected void init(String rootName) {
