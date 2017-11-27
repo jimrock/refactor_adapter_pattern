@@ -3,7 +3,7 @@ package refactor.adapter.xml;
 import java.util.Stack;
 
 public class XMLBuilder extends AbstractBuilder {
-	private TagNode root;
+	private Node root;
 	private Node parent;
 	private Node current;
 
