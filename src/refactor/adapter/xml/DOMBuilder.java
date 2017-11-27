@@ -11,11 +11,8 @@ import org.w3c.dom.Document;
 
 public class DOMBuilder extends AbstractBuilder {
 	private Document doc;
-	private Node root;
-	private Node parent;
-	private Node current;
 
-	public DOMBuilder(String rootName) {
+    public DOMBuilder(String rootName) {
 		init(rootName);
 	}
 

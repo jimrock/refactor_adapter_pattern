@@ -3,11 +3,8 @@ package refactor.adapter.xml;
 import java.util.Stack;
 
 public class XMLBuilder extends AbstractBuilder {
-	private Node root;
-	private Node parent;
-	private Node current;
 
-	public XMLBuilder(String rootName) {
+    public XMLBuilder(String rootName) {
 		init(rootName);
 	}
 
