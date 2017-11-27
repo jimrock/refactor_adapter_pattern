@@ -8,13 +8,12 @@ import org.apache.xerces.dom.DocumentImpl;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 public class DOMBuilder extends AbstractBuilder {
 	private Document doc;
-	private Element root;
-	private Element parent;
-	private Element current;
+	private ElementAdapter root;
+	private ElementAdapter parent;
+	private ElementAdapter current;
 
 	public DOMBuilder(String rootName) {
 		init(rootName);
@@ -28,7 +27,7 @@ public class DOMBuilder extends AbstractBuilder {
 		if (atRootNode)
 			throw new RuntimeException(CANNOT_ADD_ABOVE_ROOT);
 		history.pop();
-		current = (Element) history.peek();
+		current = (ElementAdapter) history.peek();
 		addBelow(uncle);
 	}
 
@@ -41,17 +40,17 @@ public class DOMBuilder extends AbstractBuilder {
 			throw new RuntimeException(CANNOT_ADD_ABOVE_ROOT);
 		history.pop();
 		history.pop();
-		current = (Element) history.peek();
+		current = (ElementAdapter) history.peek();
 		addBelow(grandfather);
 	}
 
 	public void addAttribute(String name, String value) {
-		current.setAttribute(name, value);
+		current.getElement().setAttribute(name, value);
 	}
 
 	public void addBelow(String child) {
-		Element childNode = doc.createElement(child);
-		current.appendChild(childNode);
+		ElementAdapter childNode = new ElementAdapter(doc.createElement(child));
+		current.getElement().appendChild(childNode.getElement());
 		parent = current;
 		current = childNode;
 		history.push(current);
@@ -60,15 +59,15 @@ public class DOMBuilder extends AbstractBuilder {
 	public void addBeside(String sibling) {
 		if (current == root)
 			throw new RuntimeException(CANNOT_ADD_BESIDE_ROOT);
-		Element siblingNode = doc.createElement(sibling);
-		parent.appendChild(siblingNode);
+		ElementAdapter siblingNode = new ElementAdapter(doc.createElement(sibling));
+		parent.getElement().appendChild(siblingNode.getElement());
 		current = siblingNode;
 		history.pop();
 		history.push(current);
 	}
 
 	public void addValue(String value) {
-		current.appendChild(doc.createTextNode(value));
+		current.getElement().appendChild(doc.createTextNode(value));
 	}
 
 	public Document getDocument() {
@@ -77,8 +76,8 @@ public class DOMBuilder extends AbstractBuilder {
 
 	protected void init(String rootName) {
 		doc = new DocumentImpl();
-		root = doc.createElement(rootName);
-		doc.appendChild(root);
+		root = new ElementAdapter(doc.createElement(rootName));
+		doc.appendChild(root.getElement());
 		current = root;
 		parent = root;
 		history = new Stack();
