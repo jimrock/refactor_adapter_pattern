@@ -9,11 +9,7 @@ public class XMLBuilder extends AbstractBuilder {
 	}
 
 	public void addBelow(String child) {
-		Node childNode = new TagNode(child);
-		current.add(childNode);
-		parent = current;
-		current = childNode;
-		history.push(current);
+        addBelow(new TagNode(child));
 	}
 
 	public void addBeside(String sibling) {

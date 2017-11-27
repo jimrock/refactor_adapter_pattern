@@ -43,4 +43,11 @@ public abstract class AbstractBuilder implements OutputBuilder {
 	public void addValue(String value) {
 	    current.addValue(value);
 	}
+
+    protected void addBelow(Node childNode) {
+        current.add(childNode);
+        parent = current;
+        current = childNode;
+        history.push(current);
+    }
 }

@@ -17,14 +17,10 @@ public class DOMBuilder extends AbstractBuilder {
 	}
 
 	public void addBelow(String child) {
-		Node childNode = new ElementAdapter(doc.createElement(child),doc);
-		current.add(childNode);
-		parent = current;
-		current = childNode;
-		history.push(current);
+        addBelow(new ElementAdapter(doc.createElement(child),doc));
 	}
 
-	public void addBeside(String sibling) {
+    public void addBeside(String sibling) {
 		if (current == root)
 			throw new RuntimeException(CANNOT_ADD_BESIDE_ROOT);
 		Node siblingNode = new ElementAdapter(doc.createElement(sibling),doc);
